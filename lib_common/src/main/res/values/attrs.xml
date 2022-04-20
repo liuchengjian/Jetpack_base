@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    <org.devio.as.proj.common.ui.view.InputItemLayout
+           app:hint="请输入手机号"
+           app:inputType="text|number|password"
+           app:title="用户名"
+           app:inputTextAppearance="@style/inputTextAppearance"
+           app:titleTextAppearance="@style/titleTextAppearance"
+           app:topLineAppearance="@style/lineAppearance"
+           app:bottomLineAppearance="@style/full_width_lineAppearance"
+       >-->
+    <declare-styleable name="InputItemLayout">
+        <attr name="hint" format="string"/>
+        <attr name="title" format="string"/>
+        <attr name="maxInputLength" format="integer"/>
+        <attr name="inputType" format="enum">
+            <enum name="text" value="0"/>
+            <enum name="password" value="1"/>
+            <enum name="number" value="2"/>
+        </attr>
+        <attr name="inputTextAppearance" format="reference"/>
+        <attr name="titleTextAppearance" format="reference"/>
+        <attr name="topLineAppearance" format="reference"/>
+        <attr name="bottomLineAppearance" format="reference"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="inputTextAppearance">
+        <attr name="hintColor" format="color"/>
+        <attr name="inputColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="titleTextAppearance">
+        <attr name="titleColor" format="color"/>
+        <attr name="titleSize" format="dimension"/>
+        <attr name="minWidths" format="dimension"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="lineAppearance">
+        <attr name="color" format="color"/>
+        <attr name="height" format="dimension"/>
+        <attr name="leftMargin" format="dimension"/>
+        <attr name="rightMargin" format="dimension"/>
+        <attr name="enable" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="HiBanner">
+        <attr name="autoPlay" format="boolean" />
+        <attr name="loop" format="boolean" />
+        <attr name="intervalTime" format="integer|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="HiSliderView">
+        <attr name="menuItemWidth" format="dimension"></attr>
+        <attr name="menuItemHeight" format="dimension"></attr>
+        <attr name="menuItemTextSize" format="dimension"></attr>
+        <attr name="menuItemSelectTextSize" format="dimension"></attr>
+        <attr name="menuItemIndicator" format="reference"></attr>
+        <attr name="menuItemTextColor" format="reference"></attr>
+        <attr name="menuItemBackgroundColor" format="color"></attr>
+        <attr name="menuItemSelectBackgroundColor" format="color"></attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="FlexBoxLayout">
+        <attr name="android:orientation" />
+        <attr name="layoutDirection" format="enum">
+            <enum name="ltr" value="0"/>
+            <enum name="rtl" value="1"/>
+        </attr>
+        <attr name="debugDraw" format="boolean"/>
+        <attr name="maxLines" format="integer"/>
+        <attr name="weightDefault" format="float" />
+        <attr name="drawBorder" format="boolean"/>
+        <attr name="android:gravity"/>
+    </declare-styleable>
+    <declare-styleable name="FlexBoxLayout_LayoutParams">
+        <attr name="layout_newLine" format="boolean"/>
+        <attr name="layout_weight" format="float"/>
+        <attr name="android:layout_gravity"/>
+    </declare-styleable>
+</resources>

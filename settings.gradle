@@ -1,0 +1,7 @@
+rootProject.name = "Jetpack_base"
+include ':app'
+include ':lib_common'
+include ':lib_navannotation'
+include ':lib_navcompiler'
+include ':lib_network'
+include ':libcommon'

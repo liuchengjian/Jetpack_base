@@ -1,0 +1,34 @@
+{
+  "main/tabs/home": {
+    "isFragment": true,
+    "asStarter": true,
+    "needLogin": false,
+    "pageUrl": "main/tabs/home",
+    "className": "com.liucj.jetpack_base.ui.home.HomeFragment",
+    "id": 1678393121
+  },
+  "main/tabs/category": {
+    "isFragment": true,
+    "asStarter": true,
+    "needLogin": false,
+    "pageUrl": "main/tabs/category",
+    "className": "com.liucj.jetpack_base.ui.home.CategoryFragment",
+    "id": 1678393122
+  },
+  "main/tabs/sofa": {
+    "isFragment": true,
+    "asStarter": false,
+    "needLogin": false,
+    "pageUrl": "main/tabs/sofa",
+    "className": "com.liucj.jetpack_base.ui.sofa.SofaFragment",
+    "id": 1678393123
+  },
+  "main/tabs/my": {
+    "isFragment": true,
+    "asStarter": false,
+    "needLogin": false,
+    "pageUrl": "main/tabs/my",
+    "className": "com.liucj.jetpack_base.ui.dashboard.DashboardFragment",
+    "id": 1678393124
+  }
+}
