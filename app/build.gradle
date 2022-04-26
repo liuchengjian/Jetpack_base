@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
 }
 apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
 //模块build.gradle
 apply plugin: 'kotlin-kapt'
 
@@ -43,6 +45,9 @@ android {
 //    }
 }
 
+androidExtensions {
+    experimental = true
+}
 
 dependencies {
     implementation 'androidx.media2:media2-exoplayer:1.2.0'

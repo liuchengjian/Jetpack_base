@@ -1,5 +1,11 @@
 package com.liucj.jetpack_base.model
 
+import android.os.Parcelable
+import android.text.TextUtils
+import androidx.versionedparcelable.ParcelField
+import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
+
 /**
  * "goodsId": "1580374361011",
 "categoryId": "16",
@@ -27,6 +33,7 @@ package com.liucj.jetpack_base.model
 "createTime": "2020-01-30 16:52:41",
 "sliderImage": "https://o.devio.org/images/as/goods/images/2018-12-21/5c3672e33377b65d5f1bef488686462b.jpeg"
  */
+@Parcelize
 data class GoodsModel(
     val categoryId: String,
     val completedNumText: String,
@@ -35,9 +42,23 @@ data class GoodsModel(
     val goodsName: String,
     val groupPrice: String,
     val hot: Boolean,
-    val joinedAvatars: List<SliderImage>,
+    val joinedAvatars: List<SliderImage>?,
     val marketPrice: String,
     val sliderImage: String,
-    val sliderImages: List<SliderImage>,
+    val sliderImages: List<SliderImage>?,
     val tags: String
-)
+):Serializable,Parcelable
+
+data class GoodsList(val total:Int,val list :List<GoodsModel>){
+
+}
+
+fun selectPrice(groupPrice:String?,marketPrice:String?):String{
+    var price :String?= if(TextUtils.isEmpty(marketPrice)) groupPrice else marketPrice
+    if(price?.startsWith("¥")!=true){
+        price = "¥".plus(price)
+    }
+    return price;
+}
+
+

@@ -1,6 +1,8 @@
 package com.liucj.jetpack_base.ui.home
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
@@ -10,14 +12,17 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.liucj.jetpack_base.R
+import com.liucj.jetpack_base.api.DetailApi
+import com.liucj.jetpack_base.model.DetailModel
 import com.liucj.jetpack_base.model.GoodsModel
+import com.liucj.jetpack_base.ui.detail.DetailActivity
 import com.liucj.lib_common.item.HiDataItem
 import com.liucj.lib_common.item.HiViewHolder
 import com.liucj.lib_common.utils.HiDisplayUtil
 import com.liucj.lib_common.view.loadUrl
 
 class GoodsItem(val goodsModel: GoodsModel, val hotTab: Boolean) :
-    HiDataItem<GoodsModel, HiViewHolder>(goodsModel) {
+        HiDataItem<GoodsModel, HiViewHolder>(goodsModel) {
     val MAX_TAG_SIZE = 3
     override fun onBindData(holder: HiViewHolder, position: Int) {
 
@@ -73,6 +78,14 @@ class GoodsItem(val goodsModel: GoodsModel, val hotTab: Boolean) :
             }
             holder.itemView.layoutParams = params
         }
+        holder.itemView.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("goodsId", goodsModel.goodsId)
+            bundle.putParcelable("goodsModel", goodsModel)
+            val intent= Intent(context,DetailActivity::class.java)
+            intent.putExtras(bundle)
+            context.startActivity(intent)
+        }
     }
 
     private fun createLabelView(context: Context, withLeftMargin: Boolean): TextView {
@@ -82,8 +95,8 @@ class GoodsItem(val goodsModel: GoodsModel, val hotTab: Boolean) :
         labelView.textSize = 11f
         labelView.gravity = Gravity.CENTER
         val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            HiDisplayUtil.dp2px(16f)
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                HiDisplayUtil.dp2px(16f)
         )
         params.leftMargin = if (withLeftMargin) HiDisplayUtil.dp2px(5f) else 0
         labelView.layoutParams = params
