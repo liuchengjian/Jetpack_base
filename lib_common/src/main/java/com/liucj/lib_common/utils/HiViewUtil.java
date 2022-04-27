@@ -1,5 +1,9 @@
 package com.liucj.lib_common.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -33,6 +37,27 @@ public class HiViewUtil {
                     deque.add(container.getChildAt(i));
                 }
             }
+        }
+        return null;
+    }
+
+    public static boolean isActivityDestroyed(Context context) {
+        Activity activity = findActivity(context);
+        if(activity!=null){
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
+                return activity.isDestroyed()||activity.isFinishing();
+            }
+            return activity.isFinishing();
+        }
+        return true;
+    }
+
+    private static Activity findActivity(Context context) {
+        //怎么判断context 是不是activity
+        if (context instanceof Activity) return (Activity) context;
+        else if (context instanceof ContextWrapper) {
+            //需要判断 ContextWrapper才算完善
+            return findActivity(((ContextWrapper) context).getBaseContext());
         }
         return null;
     }

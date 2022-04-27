@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.liucj.lib_common.view.IconFontTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:gravity="center"
+    android:textColor="@color/color_dd2"
+    android:textSize="@dimen/dp_16"
+    android:background="@color/color_white"
+    android:textStyle="bold"
+    android:text="&#xe6d1; 相似商品"
+    tools:ignore="MissingDefaultResource">
+
+</com.liucj.lib_common.view.IconFontTextView>

@@ -75,4 +75,6 @@ class CommentModels : Serializable {
     val content: String? = null
 }
 
+data class Favorite(val goodsId:String,var isFavorite: Boolean)
+
 

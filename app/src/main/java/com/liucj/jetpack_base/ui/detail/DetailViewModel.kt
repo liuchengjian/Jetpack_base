@@ -6,6 +6,8 @@ import com.liucj.jetpack_base.BuildConfig
 import com.liucj.jetpack_base.api.ApiFactory
 import com.liucj.jetpack_base.api.DetailApi
 import com.liucj.jetpack_base.model.DetailModel
+import com.liucj.jetpack_base.model.Favorite
+import com.liucj.jetpack_base.model.FavoriteApi
 import com.liucj.lib_network.restful_kt.HiCall
 import com.liucj.lib_network.restful_kt.HiCallback
 import com.liucj.lib_network.restful_kt.HiResponse
@@ -53,5 +55,24 @@ class DetailViewModel(val goodsId: String?) : ViewModel() {
             })
         }
         return pageData
+    }
+
+    fun toggleFavorite():LiveData<Boolean>{
+        val toggleFavoriteData = MutableLiveData<Boolean>()
+        if (!TextUtils.isEmpty(goodsId)) {
+            ApiFactory.create(FavoriteApi::class.java)
+                    .favorite(goodsId!!)
+                    .enqueue(object :HiCallback<Favorite>{
+                        override fun onSuccess(response: HiResponse<Favorite>) {
+                            toggleFavoriteData.postValue(response.data?.isFavorite)
+                        }
+
+                        override fun onFailed(throwable: Throwable) {
+                            toggleFavoriteData.postValue(null)
+                        }
+
+                    })
+        }
+        return toggleFavoriteData;
     }
 }

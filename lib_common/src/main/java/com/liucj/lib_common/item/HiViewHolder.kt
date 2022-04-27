@@ -3,8 +3,11 @@ package com.liucj.lib_common.item
 import android.util.SparseArray
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.extensions.LayoutContainer
 
-class HiViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class HiViewHolder(val view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
+    override val containerView: View?
+        get() = view
 
     private var viewCache = SparseArray<View>()
 
