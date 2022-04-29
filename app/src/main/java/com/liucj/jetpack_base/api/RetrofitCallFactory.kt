@@ -1,8 +1,8 @@
 package com.liucj.jetpack_base.api
 
 import com.liucj.lib_network.restful_kt.*
+
 import okhttp3.FormBody
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -20,8 +20,8 @@ class RetrofitCallFactory(baseUrl: String) : HiCall.Factory {
 
     init {
         val retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .build()
+                .baseUrl(baseUrl)
+                .build()
 
         apiService = retrofit.create(ApiService::class.java)
         hiConvert = GsonConvert()
@@ -47,8 +47,8 @@ class RetrofitCallFactory(baseUrl: String) : HiCall.Factory {
                 }
 
                 override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>
                 ) {
                     val response: HiResponse<T> = parseResponse(response)
                     callback.onSuccess(response)
@@ -74,37 +74,52 @@ class RetrofitCallFactory(baseUrl: String) : HiCall.Factory {
         }
 
         private fun createRealCall(request: HiRequest): Call<ResponseBody> {
-            if (request.httpMethod == HiRequest.METHOD.GET) {
-                return apiService.get(request.headers, request.endPointUrl(), request.parameters)
-            } else if (request.httpMethod == HiRequest.METHOD.POST) {
-                val parameters: MutableMap<String, String>? = request.parameters
-                val builder = FormBody.Builder()
-                val requestBody: RequestBody
-                val jsonObject = JSONObject()
-                if (parameters != null) {
-                    for ((key, value) in parameters) {
-                        if (request.formPost) {
-                            builder.add(key, value)
-                        } else {
-                            jsonObject.put(key, value)
-                        }
-                    }
+            when (request.httpMethod) {
+                HiRequest.METHOD.GET -> {
+                    return apiService.get(request.headers, request.endPointUrl(), request.parameters)
                 }
-                if (request.formPost) {
-                    requestBody = builder.build()
-                } else {
-                    requestBody = RequestBody.create(
-                            "application/json;utf-8".toMediaTypeOrNull(),
-                        jsonObject.toString()
-                    )
+                HiRequest.METHOD.POST -> {
+                    val requestBody = buildRequestBody(request)
+                    return apiService.post(request.headers, request.endPointUrl(), requestBody)
                 }
-                return apiService.post(request.headers, request.endPointUrl(), requestBody)
-            } else {
-
-                throw IllegalStateException("hirestful only support GET POST for now ,url=" + request.endPointUrl())
+                HiRequest.METHOD.PUT -> {
+                    val requestBody = buildRequestBody(request)
+                    return apiService.put(request.headers, request.endPointUrl(), requestBody)
+                }
+                HiRequest.METHOD.DELETE -> {
+                    return apiService.delete(request.headers, request.endPointUrl())
+                }
+                else -> {
+                    throw IllegalStateException("hirestful only support GET POST for now ,url=" + request.endPointUrl())
+                }
             }
 
         }
+    }
+
+    private fun buildRequestBody(request: HiRequest): RequestBody {
+        val parameters: MutableMap<String, String>? = request.parameters
+        val builder = FormBody.Builder()
+        val requestBody: RequestBody
+        val jsonObject = JSONObject()
+        if (parameters != null) {
+            for ((key, value) in parameters) {
+                if (request.formPost) {
+                    builder.add(key, value)
+                } else {
+                    jsonObject.put(key, value)
+                }
+            }
+        }
+        if (request.formPost) {
+            requestBody = builder.build()
+        } else {
+            requestBody = RequestBody.create(
+                    "application/json;utf-8".toMediaTypeOrNull(),
+                    jsonObject.toString()
+            )
+        }
+        return requestBody
     }
 
 
@@ -118,8 +133,21 @@ class RetrofitCallFactory(baseUrl: String) : HiCall.Factory {
 
         @POST
         fun post(
-            @HeaderMap headers: MutableMap<String, String>?, @Url url: String,
-            @Body body: RequestBody?
+                @HeaderMap headers: MutableMap<String, String>?, @Url url: String,
+                @Body body: RequestBody?
+        ): Call<ResponseBody>
+
+        @PUT
+        fun put(
+                @HeaderMap headers: MutableMap<String, String>?,
+                @Url url: String,
+                @Body body: RequestBody?
+        ): Call<ResponseBody>
+
+        @DELETE
+        fun delete(
+                @HeaderMap headers: MutableMap<String, String>?,
+                @Url url: String,
         ): Call<ResponseBody>
     }
 }

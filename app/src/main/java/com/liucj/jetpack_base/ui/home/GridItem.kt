@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.liucj.jetpack_base.R
+import com.liucj.jetpack_base.databinding.LayoutHomeOpGridItemBinding
 import com.liucj.jetpack_base.model.Subcategory
 import com.liucj.lib_common.item.HiDataItem
 import com.liucj.lib_common.item.HiViewHolder
@@ -41,22 +42,24 @@ class GridItem(val list: List<Subcategory>) :
 
 
     inner class GridAdapter(val context: Context, val list: List<Subcategory>) :
-        RecyclerView.Adapter<HMyViewHolder>() {
+        RecyclerView.Adapter<GridAdapter.GirdItemViewHolder>() {
         private var inflater = LayoutInflater.from(context)
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HMyViewHolder {
-            val view = inflater.inflate(R.layout.layout_home_op_grid_item, parent, false)
-            return HMyViewHolder(view)
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GirdItemViewHolder {
+           // val view = inflater.inflate(R.layout.layout_home_op_grid_item, parent, false)
+          val binding = LayoutHomeOpGridItemBinding.inflate(inflater,parent,false)
+            return GirdItemViewHolder(binding.root,binding)
         }
 
         override fun getItemCount(): Int {
             return list.size
         }
 
-        override fun onBindViewHolder(holder: HMyViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: GirdItemViewHolder, position: Int) {
             val subcategory = list[position]
-            holder.view.findViewById<ImageView>(R.id.item_image).loadUrl(subcategory.subcategoryIcon)
-            holder.view.findViewById<TextView>(R.id.item_title)?.text = subcategory.subcategoryName
+            holder.binding.subcategory = subcategory;
+//            holder.view.findViewById<ImageView>(R.id.item_image).loadUrl(subcategory.subcategoryIcon)
+//            holder.view.findViewById<TextView>(R.id.item_title)?.text = subcategory.subcategoryName
             //holder.itemView.item_image.loadUrl(subcategory.subcategoryIcon)
             //holder.itemView.item_title.text = subcategory.subcategoryName
 
@@ -70,8 +73,12 @@ class GridItem(val list: List<Subcategory>) :
 //                HiRoute.startActivity(context, bundle, GOODS_LIST)
             }
         }
+        inner class GirdItemViewHolder(view:View,val binding: LayoutHomeOpGridItemBinding)
+            :HiViewHolder( view )
     }
 
     class HMyViewHolder(val view: View) : RecyclerView.ViewHolder(view){
     }
+
+
 }

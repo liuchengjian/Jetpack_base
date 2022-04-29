@@ -3,6 +3,8 @@ package com.liucj.jetpack_base.ui.home
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.liucj.jetpack_base.api.ApiFactory
 import com.liucj.jetpack_base.api.HomeApi
 import com.liucj.jetpack_base.model.HomeModel
@@ -14,6 +16,7 @@ import com.liucj.lib_network.restful_kt.HiResponse
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 
 class HomeTabFragment : BaseListFragment() {
+    private lateinit var viewMolder: HomeViewModel
     private var categoryId: String? = null
     val DEFAULT_HOT_TAB_CATEGORY_ID = "1"
 
@@ -31,6 +34,7 @@ class HomeTabFragment : BaseListFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         categoryId = arguments?.getString("categoryId", DEFAULT_HOT_TAB_CATEGORY_ID)
         super.onViewCreated(view, savedInstanceState)
+        viewMolder =  ViewModelProvider(this)[HomeViewModel::class.java]
         queryTabCategoryList()
     }
 
@@ -45,22 +49,29 @@ class HomeTabFragment : BaseListFragment() {
     }
 
     private fun queryTabCategoryList() {
-        ApiFactory.create(HomeApi::class.java)
-                .queryTabCategoryList(categoryId!!, pageIndex, 10)
-                .enqueue(object : HiCallback<HomeModel> {
-                    override fun onSuccess(response: HiResponse<HomeModel>) {
-                        if (response.successful() && response.data != null) {
-                            updateUI(response.data!!)
-                        } else {
-                            finishRefresh(null)
-                        }
-                    }
-
-                    override fun onFailed(throwable: Throwable) {
-                        //空数据页面
-                        finishRefresh(null)
-                    }
-                })
+        viewMolder.queryTabCategoryList(categoryId!!,pageIndex).observe(viewLifecycleOwner, Observer {
+            if(it!=null){
+                updateUI(it!!)
+            }else{
+                finishRefresh(null)
+            }
+        })
+//        ApiFactory.create(HomeApi::class.java)
+//                .queryTabCategoryList(categoryId!!, pageIndex, 10)
+//                .enqueue(object : HiCallback<HomeModel> {
+//                    override fun onSuccess(response: HiResponse<HomeModel>) {
+//                        if (response.successful() && response.data != null) {
+//                            updateUI(response.data!!)
+//                        } else {
+//                            finishRefresh(null)
+//                        }
+//                    }
+//
+//                    override fun onFailed(throwable: Throwable) {
+//                        //空数据页面
+//                        finishRefresh(null)
+//                    }
+//                })
     }
 
     private fun updateUI(data: HomeModel) {

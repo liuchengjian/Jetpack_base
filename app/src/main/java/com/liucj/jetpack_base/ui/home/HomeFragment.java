@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
@@ -64,8 +65,17 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        queryTabList();
+//        queryTabList();
 
+        HomeViewModel viewModel =new ViewModelProvider(this).get(HomeViewModel.class);
+        viewModel.queryCategoryTabs().observe(getViewLifecycleOwner(), new Observer<List<TabCategory>>() {
+            @Override
+            public void onChanged(List<TabCategory> tabCategories) {
+                if(!tabCategories.isEmpty()){
+                    updateUI(tabCategories);
+                }
+            }
+        });
     }
 
     private void queryTabList() {

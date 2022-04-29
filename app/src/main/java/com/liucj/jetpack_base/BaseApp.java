@@ -8,6 +8,7 @@ public class BaseApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        TaskStartUp.start();
         ApiService.init("http://123.56.232.18:8080/serverdemo", null);
 
     }

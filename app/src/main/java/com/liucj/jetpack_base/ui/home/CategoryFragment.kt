@@ -1,5 +1,6 @@
 package com.liucj.jetpack_base.ui.home
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
@@ -18,6 +19,7 @@ import com.liucj.jetpack_base.api.CategoryApi
 import com.liucj.jetpack_base.databinding.FragmentCategoryBinding
 import com.liucj.jetpack_base.model.Subcategory
 import com.liucj.jetpack_base.model.TabCategory
+import com.liucj.jetpack_base.ui.detail.DetailActivity
 import com.liucj.lib_common.fragment.BaseFragment
 import com.liucj.lib_common.utils.HiDisplayUtil
 import com.liucj.lib_common.view.EmptyView1
@@ -140,6 +142,7 @@ class CategoryFragment : BaseFragment() {
                 },
                 onItemClick = { holder, position ->
                     //是应该跳转到类目的商品列表页的
+
                 })
 
     }

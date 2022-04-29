@@ -24,6 +24,8 @@ open class HiRequest {
         companion object {
             const val GET = 0
             const val POST = 1
+            const val DELETE = 2
+            const val PUT = 3
         }
     }
 

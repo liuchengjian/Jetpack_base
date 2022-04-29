@@ -5,34 +5,38 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.LayoutInflater.from
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.liucj.jetpack_base.BR
 import com.liucj.jetpack_base.R
-import com.liucj.jetpack_base.api.DetailApi
-import com.liucj.jetpack_base.model.DetailModel
 import com.liucj.jetpack_base.model.GoodsModel
 import com.liucj.jetpack_base.ui.detail.DetailActivity
 import com.liucj.lib_common.item.HiDataItem
 import com.liucj.lib_common.item.HiViewHolder
 import com.liucj.lib_common.utils.HiDisplayUtil
-import com.liucj.lib_common.view.loadUrl
 
 class GoodsItem(val goodsModel: GoodsModel, val hotTab: Boolean) :
-        HiDataItem<GoodsModel, HiViewHolder>(goodsModel) {
+        HiDataItem<GoodsModel, GoodsItem.GoodsItemHolder>(goodsModel) {
     val MAX_TAG_SIZE = 3
-    override fun onBindData(holder: HiViewHolder, position: Int) {
+    override fun onBindData(holder: GoodsItemHolder, position: Int) {
 
         val context = holder.itemView.context
-        holder.findViewById<ImageView>(R.id.item_image)?.loadUrl(goodsModel.sliderImage)
-        holder.findViewById<TextView>(R.id.item_title)?.text = goodsModel.goodsName
-
-        holder.findViewById<TextView>(R.id.item_price)?.text = goodsModel.marketPrice
-        holder.findViewById<TextView>(R.id.item_sale_desc)?.text = goodsModel.completedNumText
-
+//        holder.findViewById<ImageView>(R.id.item_image)?.loadUrl(goodsModel.sliderImage)
+//        holder.findViewById<TextView>(R.id.item_title)?.text = goodsModel.goodsName
+//
+//        holder.findViewById<TextView>(R.id.item_price)?.text = goodsModel.marketPrice
+//        holder.findViewById<TextView>(R.id.item_sale_desc)?.text = goodsModel.completedNumText
+        //实体需要继承 BaseObservable() 才能调用BR
+        holder.binding.setVariable(BR.goodsModel,goodsModel)
 
         val itemLabelContainer = holder.view.findViewById<LinearLayout>(R.id.item_label_container)
         if (!TextUtils.isEmpty(goodsModel.tags)) {
@@ -103,11 +107,23 @@ class GoodsItem(val goodsModel: GoodsModel, val hotTab: Boolean) :
         return labelView
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup): GoodsItemHolder? {
+        val inflater = from(parent.context)
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater,getItemLayoutRes(),
+                parent,false)
+        return GoodsItemHolder(binding)
+    }
+
+
     override fun getItemLayoutRes(): Int {
         return if (hotTab) R.layout.layout_home_goods_list_item1 else R.layout.layout_home_goods_list_item2
     }
 
     override fun getSpanSize(): Int {
         return if (hotTab) super.getSpanSize() else 1
+    }
+
+    class GoodsItemHolder(val binding: ViewDataBinding):HiViewHolder(binding.root){
+
     }
 }

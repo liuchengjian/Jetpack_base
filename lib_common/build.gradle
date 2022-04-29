@@ -3,6 +3,8 @@ plugins {
 }
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+//模块build.gradle
+apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 32
     buildToolsVersion "30.0.3"

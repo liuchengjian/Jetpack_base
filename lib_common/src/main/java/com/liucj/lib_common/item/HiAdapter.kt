@@ -2,6 +2,7 @@ package com.liucj.lib_common.item
 
 import android.content.Context
 import android.util.SparseArray
+import android.util.SparseIntArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,12 +19,15 @@ import java.lang.reflect.ParameterizedType
  *
  * bugfix:HiDataItem<*, out RecyclerView.ViewHolder>  都被改成了这样。否则会有类型转换问题
  */
-class HiAdapter(context: Context) :RecyclerView.Adapter<ViewHolder>() {
+class HiAdapter(context: Context) : RecyclerView.Adapter<ViewHolder>() {
     private val recyclerViewRef: WeakReference<RecyclerView>? = null
     private var mContext: Context = context
     private var mInflater = LayoutInflater.from(context)
     private var dataSets = ArrayList<HiDataItem<*, out ViewHolder>>()
-    private var typeArrays = SparseArray<HiDataItem<*, out ViewHolder>>()
+
+    //    private var typeArrays = SparseArray<HiDataItem<*, out ViewHolder>>()
+    private val typePositions = SparseIntArray()
+
     init {
         this.mContext = context
         this.mInflater = LayoutInflater.from(context)
@@ -171,9 +175,10 @@ class HiAdapter(context: Context) :RecyclerView.Adapter<ViewHolder>() {
         val dataItem = dataSets[itemPosition]
         val type = dataItem.javaClass.hashCode()
         //如果还没有包含这种类型的item，则添加进来
-        if (typeArrays.indexOfKey(type) < 0) {
-            typeArrays.put(type, dataItem)
-        }
+//        if (typeArrays.indexOfKey(type) < 0) {
+//            typeArrays.put(type, dataItem)
+//        }
+        typePositions.put(type, position)
         return type
     }
 
@@ -198,8 +203,11 @@ class HiAdapter(context: Context) :RecyclerView.Adapter<ViewHolder>() {
             return object : RecyclerView.ViewHolder(view) {}
         }
 
-
-        val dataItem = typeArrays.get(viewType)
+        val position = typePositions.get(viewType)
+//        val dataItem = typeArrays.get(viewType)
+        val dataItem = dataSets.get(position)
+        val vh = dataItem.onCreateViewHolder(parent)
+        if (vh != null) return vh
         var view: View? = dataItem.getItemView(parent)
         if (view == null) {
             val layoutRes = dataItem.getItemLayoutRes()
@@ -318,7 +326,7 @@ class HiAdapter(context: Context) :RecyclerView.Adapter<ViewHolder>() {
                 }
             }
             dataItem.onViewAttachedToWindow(holder)
-        }else{
+        } else {
             val position = holder.adapterPosition
             if (isHeaderPosition(position) || isFooterPosition(position))
                 return
