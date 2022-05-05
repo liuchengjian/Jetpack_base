@@ -59,6 +59,15 @@ public class HomeFragment extends BaseFragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         clipBottomPadding(binding.getRoot());
+//        binding.navigationBar.setNavListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getActivity().finish();
+//            }
+//        });
+//        binding.navigationBar.setTitle("很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长");
+//        binding.navigationBar.addRightTextButton("111",View.generateViewId());
+//        binding.navigationBar.addRightTextButton("222",View.generateViewId());
         return binding.getRoot();
     }
 

@@ -5,6 +5,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 //模块build.gradle
 apply plugin: 'kotlin-kapt'
+//apply plugin: 'cn.leo.plugin.magic'//单击防重
+//apply plugin: 'android-aspectjx'  //kotlin 用这个，编译速度会慢点
+
 android {
     compileSdkVersion 32
     buildToolsVersion "30.0.3"
@@ -121,4 +124,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     api "androidx.recyclerview:recyclerview:1.1.0"
+
+//    implementation 'com.github.jarryleo:SingleClick:v1.8.3'
+
+    // 日志调试框架：https://github.com/getActivity/Logcat
+    debugImplementation 'com.github.getActivity:Logcat:10.3'
 }

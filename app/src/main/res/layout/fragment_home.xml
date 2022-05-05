@@ -6,6 +6,11 @@
     android:background="@color/color_white"
     android:orientation="vertical">
 
+<!--    <com.liucj.lib_common.view.HiNavigationBar-->
+<!--        android:id="@+id/navigation_bar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        app:nav_title="@string/home_search_hint"-->
+<!--        android:layout_height="48dp"/>-->
     <com.liucj.lib_common.view.IconFontTextView
         android:id="@+id/search_container"
         android:layout_width="match_parent"

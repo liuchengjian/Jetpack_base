@@ -18,6 +18,12 @@ android {
         versionCode 1
         versionName "1.0"
 
+        // 仅保留中文语种的资源
+        resConfigs 'zh'
+
+        // 仅保留 xxhdpi 图片资源（目前主流分辨率 1920 * 1080）
+        resConfigs 'xxhdpi'
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -80,4 +86,8 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     implementation 'io.github.youth5201314:banner:2.2.2'
+
+    // 权限请求框架：https://github.com/getActivity/XXPermissions
+    implementation 'com.github.getActivity:XXPermissions:12.6'
+
 }

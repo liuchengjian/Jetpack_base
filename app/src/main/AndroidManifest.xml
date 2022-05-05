@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <application
@@ -23,6 +24,21 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
+        <!-- 表示当前项目已经适配了分区存储特性 -->
+        <meta-data
+            android:name="ScopedStorage"
+            android:value="true" />
+
+        <!-- logcat悬浮窗入口 -->
+        <meta-data
+            android:name="LogcatWindowEntrance"
+            android:value="false" />
+
+        <!-- logcat 通知栏入口 -->
+        <meta-data
+            android:name="LogcatNotifyEntrance"
+            android:value="true" />
+
         <activity
             android:exported="true"
             android:name=".LoginActivity"
@@ -45,6 +61,15 @@
             android:name=".ui.detail.DetailActivity"
             android:label="@string/app_name">
         </activity>
+
+        <activity
+            android:name="com.hjq.logcat.LogcatActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden"
+            tools:node="replace" />
     </application>
 
 </manifest>
